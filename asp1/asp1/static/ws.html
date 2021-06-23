@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h2>Web Sockets</h2>
+    <input type="button" value="start" id="start"" />
+    <input type="button" value="stop" id="stop" />
+    <div id='messages'></div>
+
+    <script>
+    
+        var messages = document.getElementById('messages');
+        var ws;
+        document.getElementById('start').onclick = () => {
+            try {
+                ws = new WebSocket("ws://" + location.host + "asp1/websockets.websocket");
+                alert('Create socket');
+                ws.onmessage = (msg) => {
+                    console.log('message');
+                    messages.innerHTML += `Ответ [${msg.data}]<br/>`;
+                };
+    
+                ws.onclose = (event) => {
+                    console.log('close');
+                    alert('We stop it!');
+                }
+            } catch (e) {
+                messages.innerHTML = e.message;
+            }
+        }
+
+        document.getElementById('stop').onclick = function () {
+            ws.close();
+            alert('Close socket');
+        };
+    </script>
+</body>
+</html>

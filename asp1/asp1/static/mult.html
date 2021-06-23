@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Multiplication</title>
+</head>
+<body>
+    <div>
+        <form action="http://172.16.193.234:44115/asp1/mult" method="post" id="form">
+            <input type="text" name="x_value" placeholder="X form" id="x_value" value="" />
+            <input type="text" name="y_value" placeholder="X form" id="y_value" value="" />
+            <input type="submit" name="name" value="MULTIPLY" />
+        </form>
+    </div>
+
+
+    <div>
+        <label>Multiply</label>
+        <form onsubmit="return false;">
+            <input type="text" name="name" placeholder="X xhttp" id="x_value" />
+            <input type="text" name="name" placeholder="Y xhttp" id="y_value" />
+            <input type="button" onclick="mul()" value="MULTIPLY">
+        </form>
+    </div>
+    <div id="msg"></div>
+
+    <!--172.16.193.234-->
+    <script>
+        function mul() {
+            const xhr = new XMLHttpRequest();
+            const formData = new FormData();
+            formData.append('x_value', document.getElementById('x_value').value);
+            formData.append('y_value', document.getElementById('y_value').value);
+            xhr.open('POST', 'http://172.16.193.234:44115/asp1/mult');
+            xhr.onload = function () {
+                if (xhr.status !== 200) {
+                    document.getElementById('msg').innerText = `Ошибка ${xhr.status}: ${xhr.statusText}`;
+                } else {
+                    document.getElementById('msg').innerText = xhr.response;
+                }
+            };
+            xhr.send(formData);
+
+        }
+    </script>
+</body>
+</html>
